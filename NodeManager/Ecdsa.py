@@ -51,7 +51,10 @@ def generate_pub_key(_pk):
 def perform_sha256(message):
     import hashlib
 
-    hashed_msg = hashlib.sha256(message)
+    if type(message) == str:
+        hashed_msg = hashlib.sha256(message.encode('utf-8'))
+    else:
+        hashed_msg = hashlib.sha256(message)
     hashed_dig = hashed_msg.hexdigest()
 
     return hashed_dig
@@ -66,14 +69,16 @@ def generate_address():
     sk1, sk2 = generate_pri_key()
     pk1, pk2 = generate_pub_key(sk1)
     hashed = perform_sha256(pk1)
-    encoded = hashlib.new('ripemd160', hashed).hexdigest()
+
+    encoded = hashlib.new('ripemd160', hashed.encode('utf-8')).hexdigest()
     version_added = "00" + encoded
     hashed1 = perform_sha256(version_added)
     hashed2 = perform_sha256(hashed1)
 
     address_before_encode = version_added + hashed2[:8]
 
-    convert_address = str(bytearray.fromhex(address_before_encode))
+    #convert_address = str(bytearray.fromhex(address_before_encode))
+    convert_address = bytes(bytearray.fromhex(address_before_encode))
     address_after_encode = base58.b58encode(convert_address)
 
     return address_after_encode
@@ -103,13 +108,13 @@ if __name__ == '__main__':
 
     msg = "msgtest"
     t = sk2.sign(msg)
-    print t
+    print (t)
     u = pk2.verify(t, msg)
-    print u
+    print (u)
 
 
-    print "private KEY: ",sk1," ", sk2," ", sys.getsizeof(sk1), type(sk2)
-    print "public KEY: ",pk1," ", pk2," ", sys.getsizeof(pk1), type(pk2)
+    print ("private KEY: ",sk1," ", sk2," ", sys.getsizeof(sk1), type(sk2))
+    print ("public KEY: ",pk1," ", pk2," ", sys.getsizeof(pk1), type(pk2))
     # print hashed, " ", sys.getsizeof(hashed), " ", len(hashed)
     # print encoded, " ", sys.getsizeof(encoded)," ", type(encoded), " ", len(encoded)
     # print version_added
@@ -118,6 +123,6 @@ if __name__ == '__main__':
     #
     # print address_before_encode
     # print address_after_encode, type(address_after_encode)
-    print generate_address()
+    print (generate_address())
     # t = generate_address()[0]
     # print t

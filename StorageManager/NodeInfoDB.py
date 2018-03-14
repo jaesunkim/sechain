@@ -7,7 +7,7 @@ path = Property.DB_PATH + 'nodeinfo.db'
 def create_nodeinfo_table():
     con = sqlite3.connect(path)
     cursor = con.cursor()
-    cursor.execute("CREATE TABLE nodeinfo(idx, ip)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS nodeinfo(idx, ip)")
     con.close()
 
 
@@ -27,7 +27,7 @@ def read_db():
     cursor.execute("SELECT * FROM nodeinfo")
 
     for result in cursor:
-        print result
+        print (result)
 
 
 if __name__ == '__main__':

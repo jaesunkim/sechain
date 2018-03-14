@@ -110,8 +110,8 @@ class MainFrame(wx.Frame):
         MainController.initiate_node()
 
     def start_trust_node(self, event):
-        print "My_ip : " + Property.my_ip_address
-        print "Trust_ip : " + Property.trust_node_ip
+        print("My_ip : " + Property.my_ip_address)
+        print("Trust_ip : " + Property.trust_node_ip)
         if Property.my_ip_address == Property.trust_node_ip :
             self.write_console("start trust node")
             MainController.node_start()
@@ -151,7 +151,7 @@ class MainFrame(wx.Frame):
 
             trx_drg.Destroy()
         else:
-            print "Node is not started, Start node first"
+            print("Node is not started, Start node first")
             self.write_console("Node is not started, Start node first")
 
     def deploy_contract(self, event):
@@ -197,7 +197,7 @@ class MainFrame(wx.Frame):
 
             trx_drg.Destroy()
         else:
-            print "Node is not started, Start node first"
+            print("Node is not started, Start node first")
             self.write_console("Node is not started, Start node first")
 
 
@@ -247,5 +247,5 @@ class MainFrame(wx.Frame):
 
             trx_drg.Destroy()
         else:
-            print "Node is not started, Start node first"
+            print ("Node is not started, Start node first")
             self.write_console("Node is not started, Start node first")

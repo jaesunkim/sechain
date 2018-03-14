@@ -131,6 +131,6 @@ def get_block_height():
     return len(os.walk(block_storage_path).next()[2])
 
 def add_node_info(node_info):
-    path_info = database_path + '\NodeInfo.txt'
+    path_info = database_path + '\\NodeInfo.txt'
     write(path_info, node_info)
 

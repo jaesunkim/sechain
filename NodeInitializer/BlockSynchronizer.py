@@ -2,12 +2,12 @@ import json, sys, traceback
 from socket import *
 from SeChainController import Property
 from CommunicationManager import Sender
-
+import _thread
 
 #sending blocks in trust node is implemented in Receiver.py
 def sync_blocks():
-    import thread
-    thread.start_new_thread(receive_block_for_sync, ("BlockSyncReceiver", 1))
+    #import threading
+    _thread.start_new_thread(receive_block_for_sync, ("BlockSyncReceiver",1))
     request_block_sync()
 
 
@@ -51,12 +51,12 @@ def receive_block_for_sync(*args):
                     break
 
                 data_entity = json.loads(data)
-                print "Receiving " + data_entity['type']
+                print ("Receiving " + data_entity['type'])
 
 
                 #if sync is finished
                 if data_entity['type'] == 'Q':
-                    print 'Block sync complete'
+                    print ('Block sync complete')
                     Property.block_sync = True
                     break
 

@@ -1,5 +1,9 @@
-from SeChainController import Property
 from NodeManager import NodeController
+from SeChainController import Property
+import _thread
+
+
+
 
 class MainController(object):
 
@@ -10,11 +14,8 @@ class MainController(object):
     def initiate_node(*args):
 
         from NodeInitializer import NodeListSynchronizer
-
         from NodeInitializer import BlockSynchronizer
-
         from SeChainUI import MainUI
-
         from StorageManager import NodeInfoDB, utxoDB
 
         '''
@@ -50,8 +51,8 @@ class MainController(object):
 
     @staticmethod
     def node_start():
-        import Property
-        import thread
+        from SeChainController import Property
+        # import thread
         from StorageManager import FileController
         from CommunicationManager import Receiver
         from SeChainUI import MainUI
@@ -84,7 +85,7 @@ class MainController(object):
 
         #node listener start
         Property.nodeList = FileController.get_node_list()
-        thread.start_new_thread(Receiver.start, ("Listener_Thread", Property.my_ip_address, Property.port))
+        _thread.start_new_thread(Receiver.start, ("Listener_Thread", Property.my_ip_address, Property.port))
 
         Property.node_started = True
 
@@ -92,17 +93,17 @@ class MainController(object):
     @staticmethod
     def get_ip_address():
         import socket
-        import Property
+        from SeChainController import Property #ABC add from ' '
         Property.my_ip_address = socket.gethostbyname(socket.gethostname())
         return Property.my_ip_address
 
     @staticmethod
     def set_my_node():
         from NodeManager import NodeController
-        import Property
+        from SeChainController import Property #ABC add from ' '
         Property.myNode, Property.my_node_json = NodeController.get_node()
-        print Property.myNode
-        print Property.my_node_json
+        print (Property.myNode)
+        print (Property.my_node_json)
 
     # For console based UI
     # @staticmethod

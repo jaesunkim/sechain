@@ -1,23 +1,26 @@
-import JsonEncoder
 import json
-from StorageManager import FileController
+
+from NodeManager import JsonEncoder
 from SeChainController import Property
+from StorageManager import FileController
+from NodeManager import KeyGenerator
+
 
 def get_node():
-    import Node, json
+    from NodeManager import Node
+    import json
     from SeChainController import Property
-    from KeyGenerator import generation_key_pair
-    import Ecdsa
+    from NodeManager import Ecdsa
     # Check node list (NodeInfo.txt)
     # Create New Node and Send node information to SEZIP.
     if FileController.get_node() is False:
-        print "Joining SeChain"
+        print ("Joining SeChain")
 
         '''
 
             need to change -> Ecdsa key pair
         '''
-        gen_public_key, gen_private_key = generation_key_pair(2 ** 256)
+        gen_public_key, gen_private_key = KeyGenerator.generation_key_pair(2 ** 256)
 
         node = Node.Node(Property.my_ip_address)
         node.public_key = gen_public_key
@@ -78,10 +81,10 @@ def add_new_node(node_info_entity):
     if sync_flag is False:
         if Property.my_ip_address != node_info_entity['ip_address']:
             FileController.add_node_info(json.dumps(node_info_entity))
-            print "New node("+ node_info_entity['ip_address'] +") is added in local storage"
+            print ("New node("+ node_info_entity['ip_address'] +") is added in local storage")
 
     else :
-        print "Node(" + node_info_entity['ip_address'] + ") is already listed"
+        print ("Node(" + node_info_entity['ip_address'] + ") is already listed")
 
     return True
 

@@ -8,7 +8,7 @@ def create_utxo_table():
     con = sqlite3.connect(path)
     cursor = con.cursor()
 
-    cursor.execute("CREATE TABLE UTXO(address, utxo)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS UTXO(address, utxo)")
 
     con.close()
 
@@ -43,7 +43,7 @@ def read_db():
     cursor.execute("SELECT * FROM UTXO")
 
     for result in cursor:
-        print result
+        print (result)
 
     con.close()
 
@@ -59,7 +59,7 @@ def search_utxo(address):
 
     result = cursor.fetchone()
 
-    print "UTXO IS ", result
+    print ("UTXO IS ", result)
 
     con.close()
 
@@ -80,6 +80,6 @@ if __name__ == '__main__':
 
     res =search_utxo('1abcd')
 
-    print res[0]
+    print (res[0])
 
     read_db()

@@ -20,17 +20,17 @@ def makeContract(time_stamp,sourceName,args):
     fContract = open(CONTRACT_ADDR + contractAddr, 'rb')
     state = fContract.read()
     fContract.close()
-    print 'Contract (' + contractAddr + ') deploied'
+    print ('Contract (' + contractAddr + ') deploied')
     return {'contractAddr' :  contractAddr ,'state' : state}
 
 def run(contractAddr,functionName,args):
 
     #load states & run
     contractAddress = CONTRACT_ADDR+contractAddr
-    print contractAddress
+    print (contractAddress)
     fContract = open(contractAddress,'r')
     contract = pickle.load(fContract)
-    print 'Contract loaded'
+    print ('Contract loaded')
     method = getattr(contract, functionName)
     #run method
     result = method(*args)
@@ -43,7 +43,7 @@ def run(contractAddr,functionName,args):
     fContract = open(contractAddress,'r')
     state = fContract.read()
     fContract.close()
-    print 'Contract run : result : ' + str(result)
+    print ('Contract run : result : ' + str(result))
     return {'result' : result,'state' : state}
 
 #makeContract('aaaaa','aaa',(1,2))

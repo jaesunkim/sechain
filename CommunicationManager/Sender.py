@@ -7,12 +7,11 @@ def send(ip_address, message, port, *args):
     if ip_address != Property.my_ip_address:
         receiver_addr = (ip_address, port)
         tcp_socket = socket(AF_INET, SOCK_STREAM)
-
         try:
             tcp_socket.connect(receiver_addr)
-            tcp_socket.send(message)
+            tcp_socket.send(message.encode())
         except Exception as e:
-            print "Connection Failed ", e
+            print ("Connection Failed ", e)
 
         tcp_socket.close()
 
@@ -33,6 +32,6 @@ def send_to_all_node(message):
             try:
                 send(addr, message, Property.port, 1)
             except Exception as e:
-                print e
+                print (e)
         else:
             continue

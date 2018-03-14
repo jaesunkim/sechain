@@ -7,9 +7,9 @@ from socket import *
 
 # sending node list in trust node is implemented in Receiver.py
 def download_node_list(my_node):
-    import thread
+    import _thread
 
-    thread.start_new_thread(receive_node_list, ("Node List Receiver", 1))
+    _thread.start_new_thread(receive_node_list, ("Node List Receiver", 1))
     request_node_list()
 
 
@@ -33,7 +33,7 @@ def receive_node_list(*args):
     tcp_socket = socket(AF_INET, SOCK_STREAM)
     tcp_socket.bind(addr)
     tcp_socket.listen(5)
-    print "Node List Receiver is started(" + str(Property.my_ip_address) + ":" + str(Property.port) + ")"
+    print ("Node List Receiver is started(" + str(Property.my_ip_address) + ":" + str(Property.port) + ")")
 
     while True:
         receive_socket, sender_ip = tcp_socket.accept()
@@ -45,10 +45,10 @@ def receive_node_list(*args):
                 if data == "":
                     break
                 data_entity = json.loads(data)
-                print "Receiving " + data_entity['type']
+                print ("Receiving " + data_entity['type'])
 
                 if data_entity['type'] == 'QN':
-                    print 'Node list sync complete'
+                    print ('Node list sync complete')
                     Property.node_sync = True
                     break
 

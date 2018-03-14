@@ -1,5 +1,5 @@
 import json
-import ContractRunner
+from SmartContractManager import ContractRunner
 
 def process_contract(transactions):
     contract_states = {}

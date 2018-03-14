@@ -16,11 +16,11 @@ def start(thread_name, ip_address, port):
     tcp_socket = socket(AF_INET, SOCK_STREAM)
     tcp_socket.bind(addr)
     tcp_socket.listen(5)
-    print "Receiver is started " + str(ip_address)+":"+str(port)
+    print ("Receiver is started " + str(ip_address)+":"+str(port))
 
     while True:
         receive_socket, sender_ip = tcp_socket.accept()
-        print sender_ip
+        print (sender_ip)
 
         while True:
             data = receive_socket.recv(buf_size)
@@ -28,12 +28,14 @@ def start(thread_name, ip_address, port):
             try:
                 if data == "":
                     break
+                print(data)
                 data_entity = json.loads(data)
-                print "Receiving " + data
-                print "Receiving " + data_entity['type']
+
+                print ("Receiving " + data.decode())
+                print ("Receiving " + data_entity['type'])
 
                 if data_entity['type'] == 't' or data_entity['type'] == 'ct' or  data_entity['type'] == 'rt':
-                    print "\nTransaction received from ", sender_ip
+                    print ("\nTransaction received from ", sender_ip)
 
 
                     '''
@@ -60,7 +62,7 @@ def start(thread_name, ip_address, port):
                     if sync_flag is False:
                         NodeController.add_new_node(data_entity)
 
-                    print "New node is connected"
+                    print ("New node is connected")
 
                     break
 
@@ -72,8 +74,8 @@ def start(thread_name, ip_address, port):
 
                     received_time = time.strftime('%Y%m%d%H%M%S', time.gmtime())
                     block_size = sys.getsizeof(data_entity)
-                    print "Block received: "," ", received_time
-                    print "size :",  block_size
+                    print ("Block received: "," ", received_time)
+                    print ("size :",  block_size)
 
 
                     if BlockVerifier.verify(data_entity) is True:
@@ -99,7 +101,7 @@ def start(thread_name, ip_address, port):
                             "ip_address": data_entity['ip_address']
                         }
                         json_dump = json.dumps(json_data)
-                        print 'Sending block sync complete message to ' + data_entity['ip_address']
+                        print ('Sending block sync complete message to ' + data_entity['ip_address'])
                         Sender.send(data_entity['ip_address'], json_dump, port)
 
                     # blocks are not synchronized
@@ -120,7 +122,7 @@ def start(thread_name, ip_address, port):
                                     }
                                     f.close()
                                     datas = json.dumps(write_file)
-                                    print 'Sending block to ' + data_entity['ip_address']
+                                    print ('Sending block to ' + data_entity['ip_address'])
                                     Sender.send(data_entity['ip_address'], datas, port)
 
                         fin_message = {
@@ -129,7 +131,7 @@ def start(thread_name, ip_address, port):
                         }
 
                         fin_json_message = json.dumps(fin_message)
-                        print 'Sending block sync complete message to ' + data_entity['ip_address']
+                        print ('Sending block sync complete message to ' + data_entity['ip_address'])
                         Sender.send(data_entity['ip_address'], fin_json_message, port)
                         break
 
@@ -141,14 +143,14 @@ def start(thread_name, ip_address, port):
                             'message' : n
                         }
                         json_dump = json.dumps(json_data)
-                        print 'Sending node information to ' + data_entity['ip_address']
+                        print ('Sending node information to ' + data_entity['ip_address'])
                         Sender.send(data_entity['ip_address'], json_dump, port)
 
                     fin_data = {
                         'type': 'QN',
                     }
                     fin_dump = json.dumps(fin_data)
-                    print 'Sending node info sync complete message to ' + data_entity['ip_address']
+                    print ('Sending node info sync complete message to ' + data_entity['ip_address'])
                     Sender.send(data_entity['ip_address'], fin_dump, port)
                     break
 
@@ -158,4 +160,4 @@ def start(thread_name, ip_address, port):
 
     tcp_socket.close()
     receive_socket.close()
-    print "socket closed."
+    print ("socket closed.")

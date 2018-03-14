@@ -5,7 +5,7 @@ from collections import namedtuple
 from math import log
 
 binary_type = str
-range_func = xrange
+range_func = range
 
 #key generation
 def check_prime(n, k=30):

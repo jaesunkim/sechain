@@ -9,7 +9,7 @@ from binascii import hexlify, unhexlify
 
 
 binary_type = str
-range_func = xrange
+range_func = range
 
 def checkPrime(n, k=30):
     if n <= 3:
@@ -65,9 +65,11 @@ Key = namedtuple('Key', 'exponent modulus')
 # encrypt with private key
 
 def data_encode(msg, privateKey, verbose=False):
+
     chunkSize = int(log(privateKey['modulus'], 256))
     outChunk = chunkSize + 1
     outFmt = '%%0%dx' % (outChunk * 2, )
+
 
     bMsg = msg if isinstance(msg, binary_type) else msg.encode('utf-8')
     result = []

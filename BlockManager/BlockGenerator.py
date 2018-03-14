@@ -10,6 +10,7 @@ def check_block_generation_condition():
     return False
 
 
+
 def generate_block(last_transaction):
     from BlockManager import Block
     from StorageManager import FileController

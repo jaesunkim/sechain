@@ -3,7 +3,7 @@ import os
 myNode = None #node entity
 my_node_json = None   #node entity written in json
 nodeList = None   #all peer(node) list of se-chain
-trust_node_ip = "163.239.27.32"
+trust_node_ip = "163.239.200.190"
 my_ip_address = None
 node_sync = False
 alive_nodes = dict() # key value ['alive'] is currently connected nodes

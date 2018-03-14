@@ -8,7 +8,7 @@ class Transaction(object):
                    - amount : coin
     '''
     def __init__(self, sender_pubkey, receiver, amount, msg, tx_type, contract_data):
-        from ValueData import ValueData
+        from TransactionManager.ValueData import ValueData
         from SeChainController import Property
         import json
         import time
